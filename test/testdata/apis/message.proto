@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package apis;
+option go_package = "apis";
+
+import "google/api/annotations.proto";
+
+service MessageService {
+    rpc CreateMessage (CreateMessageRequest) returns (CreateMessageResponse) {
+        option (google.api.http) = {
+            post: "/messages"
+            body: "*"
+        };
+    }
+
+    rpc GetMessage (GetMessageRequest) returns (GetMessageResponse) {
+        option (google.api.http) = {
+            get: "/messages/{message_id}"
+        };
+    }
+}
+
+message Message {
+    string content = 1;
+}
+
+message CreateMessageRequest {
+    Message message = 1;
+}
+
+message CreateMessageResponse {
+    string message_id = 1;
+}
+
+message GetMessageRequest {
+    string message_id = 1;
+}
+
+message GetMessageResponse {
+    Message message = 1;
+}
